@@ -2,10 +2,7 @@ package com.example.devices.services;
 
 import com.example.devices.entities.Device;
 import lombok.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -51,9 +48,11 @@ public class DeviceService {
         return response.getBody();
     }
 
-    public void deleteDeviceFromMockServer(int deviceId) {
+    public ResponseEntity<String> deleteDeviceFromMockServer(int deviceId) {
         // Enviar la petición DELETE
-        restTemplate.delete(mockServerUrl+"/deletedevice");
+        //restTemplate.delete(mockServerUrl+"/deletedevice");
+        ResponseEntity<String> response = restTemplate.exchange(mockServerUrl+"/deletedevice", HttpMethod.DELETE, null, String.class);
+        return response;
     }
 
 }
