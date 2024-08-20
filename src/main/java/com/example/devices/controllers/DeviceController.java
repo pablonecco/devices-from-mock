@@ -36,6 +36,7 @@ public class DeviceController {
 
     @DeleteMapping("/deletedevice/{id}")
     public ResponseEntity<String> deleteDeviceFromMockServer(@PathVariable("id") int idDevice) {
+        //DELETEg
         ResponseEntity<String> response = deviceService.deleteDeviceFromMockServer(idDevice);
         return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }

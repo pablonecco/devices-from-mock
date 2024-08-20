@@ -49,8 +49,6 @@ public class DeviceService {
     }
 
     public ResponseEntity<String> deleteDeviceFromMockServer(int deviceId) {
-        // Enviar la petición DELETE
-        //restTemplate.delete(mockServerUrl+"/deletedevice");
         ResponseEntity<String> response = restTemplate.exchange(mockServerUrl+"/deletedevice", HttpMethod.DELETE, null, String.class);
         return response;
     }
