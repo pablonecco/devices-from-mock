@@ -2,6 +2,9 @@ package com.example.devices.services;
 
 import com.example.devices.entities.Device;
 import lombok.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,4 +33,27 @@ public class DeviceService {
         ResponseEntity<Device> device = restTemplate.getForEntity(mockServerUrl+"/device/"+id, Device.class);
         return ResponseEntity.ok(device.getBody());
     }
+
+    public String sendDataToMockServer(Device device) {
+        String mockServerUrl = "https://73d7c1a9-ca53-48eb-9085-552b8afecf2f.mock.pstmn.io/";
+
+        // Configurar los headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Crear la entidad de la petición
+        HttpEntity<Device> request = new HttpEntity<>(device, headers);
+
+        // Enviar la petición POST
+        ResponseEntity<String> response = restTemplate.postForEntity(mockServerUrl+"/createdevice", request, String.class);
+
+        // Retornar la respuesta del servidor mock
+        return response.getBody();
+    }
+
+    public void deleteDeviceFromMockServer(int deviceId) {
+        // Enviar la petición DELETE
+        restTemplate.delete(mockServerUrl+"/deletedevice");
+    }
+
 }

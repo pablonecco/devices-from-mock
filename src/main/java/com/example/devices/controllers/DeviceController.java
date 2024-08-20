@@ -5,10 +5,7 @@ import com.example.devices.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +26,17 @@ public class DeviceController {
     @GetMapping("/{id}")
     public ResponseEntity<Device> findById (@PathVariable("id") int id) {
         return ResponseEntity.ok(deviceService.findById(id).getBody());
+    }
+
+    @PostMapping("/createdevice")
+    public ResponseEntity<String> sendDataToMockServer(@RequestBody Device device) {
+        String response = deviceService.sendDataToMockServer(device);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/deletedevice/{id}")
+    public ResponseEntity<Void> deleteDeviceFromMockServer(@PathVariable("id") int idDevice) {
+        deviceService.deleteDeviceFromMockServer(idDevice);
+        return ResponseEntity.noContent().build();
     }
 }
